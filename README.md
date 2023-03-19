@@ -1,6 +1,7 @@
 ```sh
 user=sakkke
 useradd -mG wheel "$user"
+pacman --noconfirm -S opendoas
 su - "$user"
 ```
 
