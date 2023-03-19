@@ -17,5 +17,25 @@ zplug romkatv/powerlevel10k, as:theme, depth:1
 
 zplug load
 
+fzf-z() {
+  temp="$(mktemp --suffix=fzf-z)"
+  jobs -l > "$temp"
+  list="$(< "$temp")"
+  rm "$temp"
+  pid="$(printf %s "$list" \
+    | fzf -0 -1 \
+    | tr -d '[]')"
+
+  if [ -z "$pid" ]; then
+    return
+  fi
+
+  %"$pid"
+}
+
+zle -N fzf-z
+
+bindkey '^Z' fzf-z
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
